@@ -6,7 +6,9 @@
 -   機能
     -   note.com の指定クリエーターのフォロー一覧を取得
     -   フォローユーザーの RSS の更新を確認
-    -   更新のあったユーザー RSS のうち現在から 1 時間以内のエントリのみピックアップ
+    -   更新エントリをピックアップ
+-   特徴
+    -   note 非公式 API や RSS 取得の処理負荷軽減のため各種処理結果をストレージにキャッシュ
 
 ## 処理シーケンス
 
@@ -17,7 +19,7 @@ sequenceDiagram
 	participant B2 as Slack RSS App
 	box this service
 		participant C1 as Note Follow Feed Agg(GCF)
-		participant C2 as Feed Etag Map(GCS)
+		participant C2 as Cashe Storage(GCS)
 	end
 	participant D as note.com
 	B2->>+C1: polling by scheduled
