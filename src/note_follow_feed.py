@@ -33,7 +33,7 @@ class NoteFollowFeed:
             self._gcs_bucket_name,
             f"{self._gcs_root_dir}/feed/{creator_id}.rss",
         )
-        if stored_feed.is_cached():
+        if not stored_feed.is_expired():
             self._logger.debug("Cached Feed %s.", stored_feed.get_updated())
             return stored_feed.get_as_string()
 
@@ -57,7 +57,7 @@ class NoteFollowFeed:
                     etime: datetime = datetime.fromtimestamp(
                         time.mktime(entry.published_parsed), timezone.utc
                     )
-                    if now - etime < timedelta(days=2):
+                    if now - etime < timedelta(days=1):
                         entry.title = f"{entry.title} - {feed.feed.title}"
                         stage_entries.append(entry)
                         if len(stage_entries) > self._max_feed_count * 2:

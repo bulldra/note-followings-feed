@@ -12,7 +12,7 @@ class StoredEtagMap(stored_gcs.StoredGcs):
         if self._etag_map:
             return self._etag_map
         if self._blob.exists():
-            self._etag_map = json.loads(self._blob.download_as_text())
+            self._etag_map = json.loads(self.download_as_string())
         else:
             self._etag_map = {}
         return self._etag_map

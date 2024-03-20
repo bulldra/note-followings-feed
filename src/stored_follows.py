@@ -17,8 +17,8 @@ class StoredFollows(stored_gcs.StoredGcs):
     def get(self) -> list:
         if self._follows:
             return self._follows
-        if self.is_cached():
-            self._follows = json.loads(self._blob.download_as_text())
+        if not self.is_expired():
+            self._follows = json.loads(self.download_as_string())
             return self._follows
 
         base_url: str = (

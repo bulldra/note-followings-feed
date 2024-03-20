@@ -12,8 +12,8 @@ class StoredFeed(stored_gcs.StoredGcs):
     def get(self) -> feedparser.FeedParserDict | None:
         if self._feed_dict:
             return self._feed_dict
-        if self._blob.exists():
-            self._feed_str = self._blob.download_as_text()
+        if self.is_exists():
+            self._feed_str = self.download_as_string()
             self._feed_dict: feedparser.FeedParserDict = feedparser.parse(
                 self._feed_str
             )
