@@ -5,7 +5,9 @@ from google.cloud import storage
 
 class StoredGcs:
 
-    def __init__(self, bucket_name, blob_name, ttl=timedelta(days=1), is_refresh=False):
+    def __init__(
+        self, bucket_name, blob_name, ttl=timedelta(hours=2), is_refresh=False
+    ):
         self._blob = storage.Client().get_bucket(bucket_name).blob(blob_name)
         self._current_time: datetime = datetime.now(timezone.utc)
         self._ttl = ttl

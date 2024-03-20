@@ -1,5 +1,3 @@
-from datetime import timedelta
-
 import feedparser
 
 import stored_gcs
@@ -7,7 +5,7 @@ import stored_gcs
 
 class StoredFeed(stored_gcs.StoredGcs):
     def __init__(self, bucket_name, blob_name):
-        super().__init__(bucket_name, blob_name, ttl=timedelta(hours=2))
+        super().__init__(bucket_name, blob_name)
         self._feed_dict = None
         self._feed_str = None
 
